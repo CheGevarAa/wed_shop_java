@@ -13,6 +13,11 @@ public class Model {
     private Long id;
 
     private Long articleNumber;
-    //private Country id;
-    //private Manufacturer id;
+    private String name;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Country country;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Manufacturer manufacturer;
 }

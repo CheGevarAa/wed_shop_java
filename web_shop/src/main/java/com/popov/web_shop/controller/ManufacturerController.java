@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@RestController
 public class ManufacturerController {
     private final ManufacturerService manufacturerService;
 
@@ -42,7 +43,7 @@ public class ManufacturerController {
     @PutMapping("/api/manufacturer/{id}")
     public ResponseEntity<?> updateManufacturer(@PathVariable(name = "id")Long id, @RequestBody Manufacturer manufacturerUpdate){
         return manufacturerService.find(id).map(manufacturer -> {
-            //here must be setters
+            manufacturer.setName(manufacturerUpdate.getName());
             manufacturerService.update(manufacturer);
             return new ResponseEntity<>(manufacturer, HttpStatus.OK);
         }).orElseThrow(() -> new IllegalArgumentException());

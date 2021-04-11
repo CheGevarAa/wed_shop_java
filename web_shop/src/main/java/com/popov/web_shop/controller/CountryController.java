@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@RestController
 public class CountryController {
     private final CountryService countryService;
 
@@ -42,7 +43,7 @@ public class CountryController {
     @PutMapping("/api/country/{id}")
     public ResponseEntity<?> updateCountry(@PathVariable(name = "id")Long id, @RequestBody Country countryUpdate){
         return countryService.find(id).map(country -> {
-            //here must be setters
+            country.setName(countryUpdate.getName());
             countryService.update(country);
             return new ResponseEntity<>(country, HttpStatus.OK);
         }).orElseThrow(() -> new IllegalArgumentException());

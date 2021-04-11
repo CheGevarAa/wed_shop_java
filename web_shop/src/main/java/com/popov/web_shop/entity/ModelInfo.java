@@ -11,7 +11,8 @@ public class ModelInfo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //private Long someone_id
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Model model;
 
     private String colour;
     private Long price;

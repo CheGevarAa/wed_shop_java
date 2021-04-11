@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@RestController
 public class ClientProfileController {
     private final ClientProfileService clientProfileService;
 
@@ -42,7 +43,14 @@ public class ClientProfileController {
     @PutMapping("/api/clientProfile/{id}")
     public ResponseEntity<?> updateClient(@PathVariable(name = "id")Long id, @RequestBody ClientProfile clientProfileUpdate){
         return clientProfileService.find(id).map(clientProfile -> {
-            //here must be setters
+            clientProfile.setBirthday(clientProfileUpdate.getBirthday());
+            clientProfile.setFlat(clientProfileUpdate.getFlat());
+            clientProfile.setHouse(clientProfileUpdate.getHouse());
+            clientProfile.setHousing(clientProfileUpdate.getHousing());
+            clientProfile.setStreet(clientProfileUpdate.getStreet());
+            clientProfile.setFirstName(clientProfileUpdate.getFirstName());
+            clientProfile.setSecondName(clientProfileUpdate.getSecondName());
+            clientProfile.setLastName(clientProfileUpdate.getLastName());
             clientProfileService.update(clientProfile);
             return new ResponseEntity<>(clientProfile, HttpStatus.OK);
         }).orElseThrow(() -> new IllegalArgumentException());

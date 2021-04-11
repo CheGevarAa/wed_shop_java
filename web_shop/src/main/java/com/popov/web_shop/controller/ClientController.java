@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@RestController
 public class ClientController {
     private final ClientService clientService;
 
@@ -42,7 +43,10 @@ public class ClientController {
     @PutMapping("/api/client/{id}")
     public ResponseEntity<?> updateClient(@PathVariable(name = "id")Long id, @RequestBody Client clientUpdate){
         return clientService.find(id).map(client -> {
-            //here must be setters
+            client.setEmail(clientUpdate.getEmail());
+            client.setPassword(clientUpdate.getPassword());
+            client.setRole_id(clientUpdate.getRole_id());
+            client.setIs_active(clientUpdate.getIs_active());
             clientService.update(client);
             return new ResponseEntity<>(client, HttpStatus.OK);
         }).orElseThrow(() -> new IllegalArgumentException());

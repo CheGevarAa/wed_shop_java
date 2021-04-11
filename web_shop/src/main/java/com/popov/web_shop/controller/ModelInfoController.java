@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@RestController
 public class ModelInfoController {
     private final ModelInfoService modelInfoService;
 
@@ -42,7 +43,10 @@ public class ModelInfoController {
     @PutMapping("/api/modelInfo/{id}")
     public ResponseEntity<?> updateModelInfo(@PathVariable(name = "id")Long id, @RequestBody ModelInfo modelInfoUpdate){
         return modelInfoService.find(id).map(modelInfo -> {
-            //here must be setters
+            modelInfo.setAmount(modelInfoUpdate.getAmount());
+            modelInfo.setColour(modelInfoUpdate.getColour());
+            modelInfo.setModel(modelInfoUpdate.getModel());
+            modelInfo.setPrice(modelInfoUpdate.getPrice());
             modelInfoService.update(modelInfo);
             return new ResponseEntity<>(modelInfo, HttpStatus.OK);
         }).orElseThrow(() -> new IllegalArgumentException());
